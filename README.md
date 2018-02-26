@@ -18,3 +18,5 @@ PyQtGraph:
     pip3 install PyQt5
     
   PyAudio
+
+    python -m pip install pyaudio
