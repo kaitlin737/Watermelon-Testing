@@ -2,18 +2,18 @@
 
 Packages and Dependencies
 
-PyQtGraph:
+PyQtGraph(older vers. of code, no longer needed):
   http://www.pyqtgraph.org/
   
   Numpy, Scipy
   
     In command Line:  python -m pip install --user numpy scipy
     
-  SIP
+  SIP(older vers. of code, no longer needed)
   
     pip3 install SIP
     
-  PyQt5
+  PyQt5(older vers. of code, no longer needed)
   
     pip3 install PyQt5
     
