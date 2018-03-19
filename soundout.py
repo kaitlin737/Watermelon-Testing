@@ -4,9 +4,9 @@ import sys
 
 
 class PlayAudio(object):
-    def __init__(self, file):
+    def __init__(self):
         self.CHUNK = 1024
-        self.file = file
+        self.file = 'C:/Users/deser/Documents/Myfiles/School/softwareEngineering/AgbotRipeness/sound.wav'
 
     def start(self):
         if not self.file:
