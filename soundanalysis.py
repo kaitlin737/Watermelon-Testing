@@ -7,6 +7,8 @@ from scipy.fftpack import fft
 
 import sys
 
+from School.softwareEngineering.AgbotRipeness.soundout import *
+
 
 class AudioStream(object):
     def __init__(self):
@@ -23,8 +25,7 @@ class AudioStream(object):
             channels=self.CHANNELS,
             rate=self.RATE,
             input=True,
-            output=True,
-            frames_per_buffer=self.CHUNK,
+            frames_per_buffer=self.CHUNK
         )
 
     def start(self):
@@ -35,4 +36,7 @@ class AudioStream(object):
 if __name__ == '__main__':
     audio_app = AudioStream()
     audio_app.start()
+    audio_out = PlayAudio()
+    audio_out.start()
+
 
