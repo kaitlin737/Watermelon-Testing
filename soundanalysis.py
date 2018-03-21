@@ -8,7 +8,6 @@ from scipy.fftpack import fft
 import sys
 
 import _thread
-from School.softwareEngineering.AgbotRipeness.soundout import *
 
 
 class AudioStream(object):
@@ -31,14 +30,14 @@ class AudioStream(object):
 
     def start(self):
         data = self.stream.read(self.CHUNK)
-        data_int = struct.unpack(str(2*self.CHUNK) + 'B', data)
+        data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2] + 127
         self.data_int = data_int
         print(len(data_int))
-        print(data_int)
+        print(*data_int)
 
     def analyze(self):
-        highbound = 255
-        lowbound = 10
+        highbound = 100
+        lowbound = -100
         ripenum = 0
         for i in self.data_int:
             if i <= highbound:
@@ -49,14 +48,8 @@ class AudioStream(object):
 
 if __name__ == '__main__':
     audio_app = AudioStream()
-    audio_out = PlayAudio()
-    # audio_app.start()
-    # audio_out.start()
-    try:
-        _thread.start_new_thread(audio_app.start(), ('thread-1', 2, ))
-        _thread.start_new_thread(audio_out.start(), ('thread-2', 4, ))
-    except:
-        print("unable to start thread.")
+
+    audio_app.start()
 
     audio_app.analyze()
 

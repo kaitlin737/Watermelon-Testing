@@ -38,3 +38,8 @@ class PlayAudio(object):
 
         # close PyAudio (5)
         p.terminate()
+
+
+if __name__ == '__main__':
+    audio_out = PlayAudio()
+    audio_out.start()
