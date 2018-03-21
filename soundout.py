@@ -1,6 +1,10 @@
 import pyaudio
 import numpy as np
 
+from soundanalysis import *
+
+import os
+
 p = pyaudio.PyAudio()
 
 volume = 0.5     # range [0.0, 1.0]
@@ -17,10 +21,18 @@ stream = p.open(format=pyaudio.paFloat32,
                 rate=fs,
                 output=True)
 
-# play. May repeat with different volume values (if done interactively)
+# Play sound
 stream.write(samples)
 
-stream.stop_stream()
-stream.close()
+if __name__ == '__main__':
+    # Start Recorder, recorder stops on its own
+    audio_app = AudioStream()
+    audio_app.start()
 
-p.terminate()
+    # Stop Sound
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+
+    # Do analysis
+    audio_app.analyze()

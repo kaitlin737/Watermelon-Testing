@@ -48,9 +48,7 @@ class AudioStream(object):
 
 if __name__ == '__main__':
     audio_app = AudioStream()
-
     audio_app.start()
-
     audio_app.analyze()
 
 
