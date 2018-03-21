@@ -1,45 +1,26 @@
 import pyaudio
-import wave
-import sys
+import numpy as np
 
+p = pyaudio.PyAudio()
 
-class PlayAudio(object):
-    def __init__(self):
-        self.CHUNK = 1024
-        self.file = 'C:/Users/deser/Documents/Myfiles/School/softwareEngineering/AgbotRipeness/sound.wav'
+volume = 0.5     # range [0.0, 1.0]
+fs = 44100       # sampling rate, Hz, must be integer
+duration = 10.0   # in seconds, may be float
+f = 440.0        # sine frequency, Hz, may be float
 
-    def start(self):
-        if not self.file:
-            print("Can't find wave file %s" % self.file)
-            sys.exit(-1)
+# generate samples, note conversion to float32 array
+samples = (np.sin(2*np.pi*np.arange(fs*duration)*f/fs)).astype(np.float32).tobytes()
 
-        wf = wave.open(self.file)
+# for paFloat32 sample values must be in range [-1.0, 1.0]
+stream = p.open(format=pyaudio.paFloat32,
+                channels=1,
+                rate=fs,
+                output=True)
 
-        # instantiate PyAudio (1)
-        p = pyaudio.PyAudio()
+# play. May repeat with different volume values (if done interactively)
+stream.write(samples)
 
-        # open stream (2)
-        stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                        channels=wf.getnchannels(),
-                        rate=wf.getframerate(),
-                        output=True)
+stream.stop_stream()
+stream.close()
 
-        # read data
-        data = wf.readframes(self.CHUNK)
-
-        # play stream (3)
-        while len(data) > 0:
-            stream.write(data)
-            data = wf.readframes(self.CHUNK)
-
-        # stop stream (4)
-        stream.stop_stream()
-        stream.close()
-
-        # close PyAudio (5)
-        p.terminate()
-
-
-if __name__ == '__main__':
-    audio_out = PlayAudio()
-    audio_out.start()
+p.terminate()
