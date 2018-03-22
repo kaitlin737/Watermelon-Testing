@@ -1,7 +1,6 @@
 import pyaudio
 import numpy as np
 from soundanalysis import *
-import _thread
 from threading import Thread
 
 
@@ -10,8 +9,8 @@ class PlaySound(object):
         self.p = pyaudio.PyAudio()
         self.volume = 0.5     # range [0.0, 1.0]
         self.fs = 44100       # sampling rate, Hz, must be integer
-        self.duration = 1.0   # in seconds, may be float
-        self.f = 940.0        # sine frequency, Hz, may be float
+        self.duration = 1.5   # in seconds, may be float
+        self.f = 340.0        # sine frequency, Hz, may be float
 
     def startSound(self):
         # generate sample stream

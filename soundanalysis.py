@@ -27,14 +27,14 @@ class AudioStream(object):
 
     def start(self):
         data = self.stream.read(self.CHUNK)
-        data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2] # + 255
+        data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2]
         self.data_int = data_int
         print("Recorded for", len(data_int), "miliseconds")
         print(*data_int)
 
     def analyze(self):
-        highbound = 100
-        lowbound = -100
+        highbound = 20
+        lowbound = 0
         ripenum = 0
         for i in self.data_int:
             if i <= highbound:
