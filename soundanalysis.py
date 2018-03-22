@@ -1,12 +1,9 @@
 
 import numpy as np
-
 import struct
 import pyaudio
 from scipy.fftpack import fft
-
 import sys
-
 import _thread
 
 
@@ -17,7 +14,7 @@ class AudioStream(object):
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         self.RATE = 44100
-        self.CHUNK = 1024 * 2
+        self.CHUNK = 1024 # * 2
 
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(
@@ -30,9 +27,9 @@ class AudioStream(object):
 
     def start(self):
         data = self.stream.read(self.CHUNK)
-        data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2] + 127
+        data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2] # + 255
         self.data_int = data_int
-        print(len(data_int))
+        print("Recorded for", len(data_int), "miliseconds")
         print(*data_int)
 
     def analyze(self):
