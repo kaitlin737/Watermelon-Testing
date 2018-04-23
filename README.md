@@ -20,3 +20,5 @@ PyQtGraph(older vers. of code, no longer needed):
   PyAudio
 
     python -m pip install pyaudio
+  On Pi
+    sudo apt-get install python-pyaudio
