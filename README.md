@@ -1,4 +1,6 @@
 # Watermelon-Testing
+Client: Rachel Gerrish, rlgerrish@odeaulete.com
+
 
 Packages and Dependencies
 
