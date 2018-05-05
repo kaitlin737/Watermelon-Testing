@@ -1,6 +1,9 @@
 # Watermelon-Testing
 Client: Rachel Gerrish, rlgerrish@odeaulete.com
 
+Levi Anstine - lanstine
+Kaitlin - 
+Sarah - 
 
 Packages and Dependencies
 
