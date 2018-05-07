@@ -5,11 +5,15 @@ import pyaudio
 from scipy.fftpack import fft
 import sys
 from sense_hat import SenseHat
-from time import sleep 
+from time import sleep
+import RPi.GPIO as GPIO
 
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11, GPIO.OUT, initial=GPIO.LOW)
 sense=SenseHat()
 sense.clear()
+
 X=[255,0,0]
 O=[33,255,92]
 W=[0,0,0]
@@ -56,13 +60,14 @@ class AudioStream(object):
 		rate=self.RATE,
 		input=True,
 		frames_per_buffer=self.CHUNK
-	)
+		)
 
 	def start(self):
 		data = self.stream.read(self.CHUNK)
 		data_int = np.array(struct.unpack(str(2*self.CHUNK) + 'B', data), dtype='b')[::2]
 		self.data_int = data_int
 		# np.savetxt("/media/pi/46AF-B1A6/output.txt", data_int, fmt='%10.00f')
+		np.savetxt("/home/pi/Desktop/output.txt", data_int, fmt='%10.00f')
 		
 	def stop(self):
 		data=self.stream.close()
@@ -93,18 +98,22 @@ class AudioStream(object):
 
 def program():
 	running=True
+	GPIO.output(11,0) # set pin 11 to low
 	while running:
-			sense.set_pixels(ready)
-			for event in sense.stick.get_events():
-					if event.action == "pressed":
-							if event.direction== "middle":
-								audio_app = AudioStream()
-								audio_app.start()
-								audio_app.analyze()
-								audio_app.stop()
-								running=False
+		sense.set_pixels(ready)
+		for event in sense.stick.get_events():
+			if event.action == "pressed":
+				if event.direction == "middle":
+					GPIO.output(11, 1) # set pin 11 to high
+					audio_app = AudioStream()
+					audio_app.start()
+					audio_app.analyze()
+					audio_app.stop()
+					running=False
+	
 	program()
 
 if __name__ == '__main__':
 	program()
+
 
